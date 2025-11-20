@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maharshi Roy - Portfolio</title>
+
+<style>
+
+/* ---------------- BASIC THEME ---------------- */
+:root {
+  --text-dark:#0a0a0a;
+  --text-light:#f1f5f9;
+  --card-light:rgba(255,255,255,1);
+  --card-dark:rgba(20,28,48,0.95);
+  --nav-light:rgba(255,255,255,0.7);
+  --nav-dark:rgba(10,14,22,0.5);
+  --accent:#0ea5a4;
+}
+
+/* ---------------- BODY ---------------- */
+body {
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background-image:url('/images/christmas-landscape-wallpaper-beautiful-winter-scenery-with-christmas-trees-snow_692702-6498.jpg');
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-attachment:fixed;
+  color:var(--text-dark);
+  overflow-x:hidden;
+}
+body.dark { color:var(--text-light); }
+
+/* ---------------- NAVIGATION ---------------- */
+nav{
+  position:fixed;
+  top:0; left:0; right:0;
+  padding:14px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--nav-light);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(0,0,0,0.1);
+  z-index:20;
+  transition:0.35s;
+}
+body.dark nav{ background:var(--nav-dark); }
+
+nav ul{
+  display:flex;
+  gap:22px;
+  list-style:none;
+}
+nav a{
+  text-decoration:none;
+  color:inherit;
+  font-weight:600;
+  padding-bottom:4px;
+  position:relative;
+}
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0; bottom:0;
+  width:0%; height:2px;
+  background:var(--accent);
+  transition:.3s;
+}
+nav a:hover::after{ width:100%; }
+
+/* ---------------- BUTTONS ---------------- */
+.btn{
+  background:#0b1321;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  position:relative;
+  overflow:hidden;
+  transition:0.2s;
+}
+.btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 18px rgba(0,0,0,0.3);
+}
+body.dark .btn{ background:white; color:#0b1321; }
+
+/* ---------------- MONEY DROP EFFECT ---------------- */
+.bill-drop{
+  position:absolute;
+  top:-10px;
+  background:#22c55e;
+  border:2px solid #14532d;
+  width:18px;height:10px;
+  border-radius:3px;
+  animation:drop 900ms ease-out forwards;
+}
+@keyframes drop{
+  to { transform:translateY(70px) rotate(30deg); opacity:0; }
+}
+
+/* ---------------- HERO ---------------- */
+.hero{
+  margin-top:160px;
+  padding:45px;
+  max-width:900px;
+  margin-inline:auto;
+  background:var(--card-light);
+  text-align:center;
+  border-radius:16px;
+}
+body.dark .hero{ background:var(--card-dark); }
+
+#typing{
+  border-right:3px solid var(--accent);
+  white-space:nowrap;
+  overflow:hidden;
+  display:inline-block;
+  font-size:34px;
+}
+
+/* ---------------- SECTIONS ---------------- */
+.section{
+  max-width:900px;
+  margin:30px auto;
+  padding:28px;
+  border-radius:14px;
+  background:var(--card-light);
+}
+body.dark .section{ background:var(--card-dark); }
+
+.project{
+  padding:20px;
+  background:white;
+  border-radius:14px;
+  border-left:6px solid var(--accent);
+  margin-bottom:20px;
+}
+body.dark .project{ background:#1e293b; }
+
+.skill{
+  padding:15px;
+  background:white;
+  border-left:6px solid var(--accent);
+  margin-bottom:14px;
+  font-weight:600;
+}
+body.dark .skill{ background:#1e293b; }
+
+/* ---------------- FOOTER ---------------- */
+footer{
+  margin-top:40px;
+  padding:25px;
+  text-align:center;
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(6px);
+  border-top:1px solid rgba(255,255,255,0.2);
+}
+footer h3{ color:white; }
+
+/* ⭐ SOCIAL ICONS (RESTORED) */
+.social-icons {
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  margin-top:14px;
+}
+.social-icons a{
+  width:40px; height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(255,255,255,0.15);
+  transition:.3s;
+}
+.social-icons a:hover{
+  transform:scale(1.15);
+  background:var(--accent);
+}
+.social-icons svg{
+  width:22px;
+  height:22px;
+  fill:white;
+}
+
+/* ---------------- STARS ---------------- */
+.star{
+  position:fixed;
+  width:3px; height:3px;
+  background:white;
+  border-radius:50%;
+  opacity:.8;
+  animation: drift 12s linear infinite;
+}
+@keyframes drift{
+  from{ transform:translateY(-20px); }
+  to{ transform:translateY(120vh); }
+}
+
+/* ---------------- SNOW ---------------- */
+#snow{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:3;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ⭐ STARS -->
+<div id="stars"></div>
+
+<!-- ❄ SNOW -->
+<canvas id="snow"></canvas>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo" style="font-size:22px; font-weight:700;">Maharshi Roy</div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button id="mode" class="btn">Dark Mode</button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <h1 id="typing"></h1>
+  <p>Front-End Developer • UI Designer • Creative Coder</p>
+  <button class="btn">About Me</button>
+  <button class="btn">Contact</button>
+</header>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <h2>My Projects</h2>
+  <div class="project"><h3>🌐 E-Commerce Website</h3></div>
+  <div class="project"><h3>🧮 Calculator</h3></div>
+  <div class="project"><h3>🎮 Mini Games</h3></div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <h2>My Skills</h2>
+  <div class="skill">HTML</div>
+  <div class="skill">CSS</div>
+  <div class="skill">JavaScript</div>
+  <div class="skill">React</div>
+  <div class="skill">MySQL</div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <h2>About</h2>
+  <p>I build modern, smooth, animated, responsive websites.</p>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <h2>Contact</h2>
+  <p>Email: yourmail@example.com</p>
+  <p>Phone: +91 XXXXXXXXXX</p>
+</section>
+
+<!-- ⭐ FOOTER WITH YOUR SOCIAL MEDIA ICONS -->
+<footer>
+  <h3>Follow Me</h3>
+
+  <div class="social-icons">
+
+    <!-- Instagram -->
+    <a href="#">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 
+        2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 
+        0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 
+        3.3A4.7 4.7 0 1 0 16.7 12 4.7 4.7 
+        0 0 0 12 7.3zm0 2A2.7 2.7 0 1 1 9.3 
+        12 2.7 2.7 0 0 1 12 9.3zm4.8-.9a1.1 1.1 
+        0 1 0-1.1-1.1 1.1 1.1 0 0 0 1.1 1.1z"/>
+      </svg>
+    </a>
+
+    <!-- Facebook -->
+    <a href="#">
+      <svg viewBox="0 0 24 24">
+        <path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 
+        1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 
+        0-1.3.6-1.3 1.2V12h2.3l-.4 3h-1.9v7A10 
+        10 0 0 0 22 12"/>
+      </svg>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="#">
+      <svg viewBox="0 0 24 24">
+        <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 
+        6S0 4.88 0 3.5 1.12 1 2.5 
+        1s2.48 1.12 2.48 2.5zM.5 
+        8h4v12h-4zm7 0h3.8v1.7h.1c.5-.9 
+        1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 
+        6V20h-4v-5.4c0-1.3 0-3-1.8-3s-2.2 
+        1.4-2.2 2.9V20h-4z"/>
+      </svg>
+    </a>
+
+  </div>
+
+  <p style="color:white; margin-top:15px; font-size:14px;">© 2025 Maharshi Roy. All Rights Reserved.</p>
+</footer>
+
+<script>
+
+/* DARK MODE */
+document.getElementById("mode").onclick = () =>
+  document.body.classList.toggle("dark");
+
+/* MONEY DROP EFFECT */
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    for(let i=0;i<5;i++){
+      const b=document.createElement('div');
+      b.className='bill-drop';
+      b.style.left=(Math.random()*40+10)+"px";
+      btn.appendChild(b);
+      setTimeout(()=>b.remove(),900);
+    }
+  });
+});
+
+/* NAVBAR SCROLL */
+window.addEventListener("scroll",()=>{
+  document.querySelector("nav")
+  .classList.toggle("shrink", window.scrollY>40);
+});
+
+/* TYPING EFFECT */
+let words=[
+  "Welcome — I build delightful web experiences",
+  "I design clean & modern interfaces",
+  "I create smooth interactive websites"
+];
+let i=0,j=0,deleting=false;
+
+function typing(){
+  let cur=words[i];
+
+  if(!deleting){
+    document.getElementById("typing").textContent=cur.substring(0,j++);
+    if(j>cur.length){ deleting=true; setTimeout(typing,1200); return; }
+  }else{
+    document.getElementById("typing").textContent=cur.substring(0,j--);
+    if(j<0){ deleting=false; i=(i+1)%words.length; }
+  }
+  setTimeout(typing, deleting?40:60);
+}
+typing();
+
+/* SNOWFALL */
+const canvas=document.getElementById('snow');
+const ctx=canvas.getContext('2d');
+let W=canvas.width=innerWidth;
+let H=canvas.height=innerHeight;
+
+addEventListener('resize',()=>{
+  W=canvas.width=innerWidth;
+  H=canvas.height=innerHeight;
+});
+
+const flakes=[];
+for(let k=0;k<120;k++){
+  flakes.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*3+1,s:Math.random()+0.5});
+}
+
+function snow(){
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='white';
+  ctx.beginPath();
+  flakes.forEach(f=>{
+    ctx.moveTo(f.x,f.y);
+    ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+  });
+  ctx.fill();
+  flakes.forEach(f=>{
+    f.y+=f.s;
+    if(f.y>H){ f.y=-5; f.x=Math.random()*W; }
+  });
+  requestAnimationFrame(snow);
+}
+snow();
+
+/* STARS */
+for(let s=0;s<40;s++){
+  let star=document.createElement("div");
+  star.className="star";
+  star.style.left=Math.random()*100+"vw";
+  star.style.top=Math.random()*100+"vh";
+  star.style.animationDuration=(8+Math.random()*10)+"s";
+  document.body.appendChild(star);
+}
+
+</script>
+</body>
+</html>
